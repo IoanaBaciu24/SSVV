@@ -38,8 +38,9 @@ public class AppTest
     }
 
     @Test
-    public void testFail()
-    {
-        assertTrue(1==2);
+    public void testFail() throws ValidatorException {
+        Student s = new Student("153", "cezar cheddar", 10, "cezar@senat.it", "stabby");
+        repo.save(s);
+        assertNull(repo.save(s));
     }
 }

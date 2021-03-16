@@ -1,8 +1,5 @@
 package ro.ubb;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import Domain.Student;
 import Exceptions.ValidatorException;
 import Repository.TxtFileRepository.StudentFileRepo;
@@ -11,6 +8,8 @@ import Validator.StudentValidator;
 import org.junit.Test;
 
 import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 /**
  * Unit test for simple App.
@@ -38,9 +37,188 @@ public class AppTest
     }
 
     @Test
-    public void testFail() throws ValidatorException {
+    public void testDoubleAdd() throws ValidatorException {
         Student s = new Student("153", "cezar cheddar", 10, "cezar@senat.it", "stabby");
         repo.save(s);
-        assertNull(repo.save(s));
+        assertSame(repo.save(s), s);
+    }
+
+    @Test
+    public void testNull()
+    {
+        try {
+            repo.save(null);
+            assertFalse(true);
+        }
+        catch (ValidatorException | IllegalArgumentException e) {
+            assertTrue(true);
+        }
+        catch (NullPointerException e)
+        {
+            assertFalse(true);
+        }
+
+    }
+
+    @Test
+    public void testIdEmpty()
+    {
+        Student s = new Student("", "cezar cheddar", 10, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+    }
+
+
+    @Test
+    public void testIdNull()
+    {
+        Student s = new Student(null, "cezar cheddar", 10, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+        catch (NullPointerException e)
+        {
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void testNameEmpty()
+    {
+        Student s = new Student("153", "", 10, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testNameNull()
+    {
+        Student s = new Student("153", null, 10, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+        catch (NullPointerException e)
+        {
+            assertFalse(true);
+        }
+    }
+
+
+    @Test
+    public void testEmailEmpty()
+    {
+        Student s = new Student("153", "cezar cheddar", 10, "", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testEmailNull()
+    {
+        Student s = new Student("153", "cezar cheddar", 10, null, "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+        catch (NullPointerException e)
+        {
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void testIndrumatorEmpty()
+    {
+        Student s = new Student("153", "cezar cheddar", 10, "cezar@senat.it", "");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testIndrumatorNull()
+    {
+        Student s = new Student("153", "cezar cheddar", 10, "cezar@senat.it", null);
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
+        catch (NullPointerException e)
+        {
+            assertFalse(true);
+        }
+    }
+
+
+    @Test
+    public void testGrupaBV1()
+    {
+        Student s = new Student("153", "cezar cheddar", 0, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertTrue(true);
+        }
+        catch (ValidatorException e) {
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void testGrupaBV3()
+    {
+        Student s = new Student("153", "cezar cheddar", 1, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertTrue(true);
+        }
+        catch (ValidatorException e) {
+            assertFalse(true);
+        }
+    }
+
+    @Test
+    public void testGrupaBV2()
+    {
+        Student s = new Student("153", "cezar cheddar", -1, "cezar@senat.it", "stabby");
+        try {
+            repo.save(s);
+            assertFalse(true);
+        }
+        catch (ValidatorException e) {
+            assertTrue(true);
+        }
     }
 }

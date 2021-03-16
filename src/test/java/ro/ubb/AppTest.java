@@ -36,4 +36,10 @@ public class AppTest
         Student s = new Student("153", "cezar cheddar", 10, "cezar@senat.it", "stabby");
         assertNull(repo.save(s));
     }
+
+    @Test
+    public void testFail()
+    {
+        assertTrue(1==2);
+    }
 }

@@ -223,4 +223,16 @@ public class AppTest
             assertTrue(true);
         }
     }
+
+    @Test
+    public void testGrupaStoI()
+    {
+        try {
+            service.add(new String[]{"153", "cezar cheddar", "altceva", "cezar@senat.it", "stabby"});
+            assertTrue(true);
+        }
+        catch (ValidatorException | NumberFormatException e) {
+            assertFalse(true);
+        }
+    }
 }

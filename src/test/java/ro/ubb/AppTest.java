@@ -191,10 +191,10 @@ public class AppTest
         Student s = new Student("153", "cezar cheddar", 0, "cezar@senat.it", "stabby");
         try {
             service.add(new String[]{"153", "cezar cheddar", "0", "cezar@senat.it", "stabby"});
-            assertTrue(true);
+            assertFalse(true);
         }
         catch (ValidatorException e) {
-            assertFalse(true);
+            assertTrue(true);
         }
     }
 

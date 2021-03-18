@@ -229,10 +229,14 @@ public class AppTest
     {
         try {
             service.add(new String[]{"153", "cezar cheddar", "altceva", "cezar@senat.it", "stabby"});
-            assertTrue(true);
-        }
-        catch (ValidatorException | NumberFormatException e) {
             assertFalse(true);
+        }
+        catch (NumberFormatException e) {
+            assertFalse(true);
+        }
+        catch (ValidatorException e)
+        {
+            assertTrue(true);
         }
     }
 }

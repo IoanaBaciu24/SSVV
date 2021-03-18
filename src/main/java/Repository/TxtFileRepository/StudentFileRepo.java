@@ -16,7 +16,15 @@ public class StudentFileRepo extends AbstractFileRepository {
     public HasId extractEntity(String[] info) {
         String id = info[0];
         String nume = info[1];
-        int grup = Integer.parseInt(info[2]);
+        int grup;
+        try
+        {
+            grup = Integer.parseInt(info[2]);
+        }
+        catch (NumberFormatException e)
+        {
+            grup = -5;
+        }
         String email = info[3];
         String indrumator = info[4];
         Student s = new Student(id, nume, grup, email, indrumator);

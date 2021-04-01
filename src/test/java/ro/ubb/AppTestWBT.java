@@ -123,27 +123,50 @@ public class AppTestWBT {
         }
     }
 
-//    @Test
-//    public void testAddNR1()
-//    {
-//        String[] dummy = new String[]{null, "le description", "2", "2"};
-//        try {
-//            temaLabService.add(dummy);
-//            fail();
-//        } catch (ValidatorException e) {
-//            assertFalse(false);
-//        }
-//    }
-//
-//    @Test
-//    public void testAddNR2()
-//    {
-//        String[] dummy = new String[]{"", "le description", "2", "2"};
-//        try {
-//            temaLabService.add(dummy);
-//            fail();
-//        } catch (ValidatorException e) {
-//            assertFalse(false);
-//        }
-//    }
+    @Test
+    public void testAddNull()
+    {
+        try
+        {
+            temaLabService.add(null);
+            fail();
+        } catch (NullPointerException e) {
+            fail();
+        }
+        catch (ValidatorException e)
+        {
+            assertFalse(false);
+        }
+    }
+
+
+    @Test
+    public void testAddNR1()
+    {
+        String[] dummy = new String[]{null, "le description", "2", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+        catch (NumberFormatException e)
+        {
+            fail();
+        }
+    }
+
+    @Test
+    public void testAddNR2()
+    {
+        String[] dummy = new String[]{"-1", "le description", "2", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+
 }

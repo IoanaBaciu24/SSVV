@@ -51,4 +51,99 @@ public class AppTestWBT {
             assertFalse(true);
         }
     }
+
+    @Test
+    public void testAddSP1()
+    {
+        String[] dummy = new String[]{"1", "le description", "2", "0"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+    @Test
+    public void testAddSP2()
+    {
+        String[] dummy = new String[]{"1", "le description", "2", "15"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+    @Test
+    public void testAddTL1()
+    {
+        String[] dummy = new String[]{"1", "le description", "0", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+    @Test
+    public void testAddTL2()
+    {
+        String[] dummy = new String[]{"1", "le description", "15", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+    @Test
+    public void testAddD1()
+    {
+        String[] dummy = new String[]{"1", "", "2", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+    @Test
+    public void testAddD2()
+    {
+        String[] dummy = new String[]{"1", null, "2", "2"};
+        try {
+            temaLabService.add(dummy);
+            fail();
+        } catch (ValidatorException e) {
+            assertFalse(false);
+        }
+    }
+
+//    @Test
+//    public void testAddNR1()
+//    {
+//        String[] dummy = new String[]{null, "le description", "2", "2"};
+//        try {
+//            temaLabService.add(dummy);
+//            fail();
+//        } catch (ValidatorException e) {
+//            assertFalse(false);
+//        }
+//    }
+//
+//    @Test
+//    public void testAddNR2()
+//    {
+//        String[] dummy = new String[]{"", "le description", "2", "2"};
+//        try {
+//            temaLabService.add(dummy);
+//            fail();
+//        } catch (ValidatorException e) {
+//            assertFalse(false);
+//        }
+//    }
 }

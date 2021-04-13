@@ -1,6 +1,7 @@
 package ro.ubb;
 
 import Domain.Student;
+import Domain.TemaLab;
 import Exceptions.ValidatorException;
 import Repository.TxtFileRepository.NotaFileRepo;
 import Repository.TxtFileRepository.StudentFileRepo;
@@ -89,6 +90,104 @@ public class AppTestIntegration {
         }
 
 
+    }
+
+    @Test
+    public void addStudentIntegrated()
+    {
+        String[] student = new String[]{"153", "cezar cheddar", "10", "cezar@senat.it", "stabby"};
+        try{
+            service.add(student);
+            assertFalse(false);
+        }
+        catch (ValidatorException e)
+        {
+            fail();
+        }
+    }
+
+    @Test
+    public void addAssignmentIntegrated()
+    {
+        String[] student = new String[]{"153", "cezar cheddar", "10", "cezar@senat.it", "stabby"};
+        String[] tema = new String[]{"1", "le description", "2", "2"};
+        try{
+            service.add(student);
+            temaLabService.add(tema);
+            assertFalse(false);
+        }
+        catch (ValidatorException e)
+        {
+            fail();
+        }
+    }
+
+    @Test
+    public void testGradeIntegrated()
+    {
+        String[] student = new String[]{"153", "cezar cheddar", "10", "cezar@senat.it", "stabby"};
+        String[] tema = new String[]{"1", "le description", "2", "2"};
+        String[] grade = new String[]{"1", "153", "1", "10", "2018-09-16T08:00:00"};
+
+        try {
+            service.add(student);
+            temaLabService.add(tema);
+            notaService.add(grade);
+            assertFalse(false);
+        } catch (ValidatorException e) {
+            fail();
+        }
+    }
+
+
+    @Test
+    public void testAddGradeTopDown()
+    {
+        String[] grade = new String[]{"1", "153", "1", "10", "2018-09-16T08:00:00"};
+
+        try
+        {
+            repo.save(new Student("153", "cezar cheddar", 10, "cezar@senat.it", "stabby"));
+            temaLabFileRepo.save(new TemaLab(1, "le description", 2, 2));
+            notaService.add(grade);
+            assertFalse(false);
+        } catch (ValidatorException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testAddGradeAddTemaLabTopDown()
+    {
+        String[] tema = new String[]{"1", "le description", "2", "2"};
+        String[] grade = new String[]{"1", "153", "1", "10", "2018-09-16T08:00:00"};
+
+        try{
+        repo.save(new Student("153", "cezar cheddar", 10, "cezar@senat.it", "stabby"));
+        temaLabService.add(tema);
+        notaService.add(grade);
+            assertFalse(false);
+
+        } catch (ValidatorException e) {
+            fail();
+        }
+
+    }
+    @Test
+    public void testAddGradeAddTemaLabAddStudentTopDown()
+    {
+        String[] student = new String[]{"153", "cezar cheddar", "10", "cezar@senat.it", "stabby"};
+        String[] tema = new String[]{"1", "le description", "2", "2"};
+        String[] grade = new String[]{"1", "153", "1", "10", "2018-09-16T08:00:00"};
+
+        try {
+            service.add(student);
+            temaLabService.add(tema);
+            notaService.add(grade);
+            assertFalse(false);
+        } catch (ValidatorException e) {
+            fail();
+        }
     }
 
 }

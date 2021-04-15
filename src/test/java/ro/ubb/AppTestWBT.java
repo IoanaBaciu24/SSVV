@@ -3,12 +3,19 @@ package ro.ubb;
 import Domain.HasId;
 import Domain.TemaLab;
 import Exceptions.ValidatorException;
+import Repository.TxtFileRepository.NotaFileRepo;
+import Repository.TxtFileRepository.StudentFileRepo;
 import Repository.TxtFileRepository.TemaLabFileRepo;
+import Service.TxtFileService.NotaService;
+import Service.TxtFileService.StudentService;
 import Service.TxtFileService.TemaLabService;
+import Validator.NotaValidator;
+import Validator.StudentValidator;
 import Validator.TemaLabValidator;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.stream.StreamSupport;
 
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.*;
@@ -167,6 +174,38 @@ public class AppTestWBT {
             assertFalse(false);
         }
     }
+
+    //some blackbox tests
+    @Test
+    public void testAddGrade()  {
+        try {
+            StudentFileRepo repo = new StudentFileRepo("src/main/java/TestStd.txt", new StudentValidator());
+            StudentService service = new StudentService(repo);
+            TemaLabFileRepo temaLabFileRepo = new TemaLabFileRepo("src/main/java/TestTemaLab.txt", new TemaLabValidator());
+            TemaLabService temaLabService = new TemaLabService(temaLabFileRepo);
+            NotaFileRepo notaRepo = new NotaFileRepo("src/main/java/TestNota.txt", new NotaValidator());
+            NotaService notaService = new NotaService(notaRepo);
+            String[] student = new String[]{"153", "cezar cheddar", "10", "cezar@senat.it", "stabby"};
+            String[] tema = new String[]{"1", "le description", "2", "2"};
+            String[] grade = new String[]{"1", "153", "1", "10", "2018-09-16T08:00:00"};
+
+            service.add(student);
+            temaLabService.add(tema);
+            notaService.add(grade);
+
+            assertTrue(StreamSupport.stream(notaService.getAll().spliterator(), false).count() == 1);
+            assertFalse(false);
+        }
+        catch(IOException e)
+        {
+
+        }
+        catch(ValidatorException e)
+        {
+            fail();
+        }
+    }
+
 
 
 }
